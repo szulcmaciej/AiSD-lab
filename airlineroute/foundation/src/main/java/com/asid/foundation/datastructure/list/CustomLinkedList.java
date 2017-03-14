@@ -8,24 +8,26 @@ import java.util.Iterator;
  * @param <T>
  */
 public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
-    /* (TODO Lab No. 1) Please introduce a sensible implementation for storage*/
+    private int size;
+    private final Node head_and_tail = new Node(null);
+
+    public CustomLinkedList(){
+        clear();
+    }
 
     @Override
     public int size() {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-         /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return false;
+        return size == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return false;
+        return indexOf(o) != -1;
     }
 
     @Override
@@ -36,70 +38,131 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 
     @Override
     public boolean add(T t) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return false;
+        add(size, t);
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return false;
+        Node n = head_and_tail.getNext();
+        Node previous = head_and_tail;
+        while(n != head_and_tail && !o.equals(n.getValue())){
+            previous = n;
+            n = n.getNext();
+        }
+        if(n != head_and_tail){
+            previous.setNext(n.getNext());
+            size--;
+            return true;
+        }
+        else
+            return false;
     }
 
     @Override
     public void clear() {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
+        head_and_tail.setNext(head_and_tail);
+        size = 0;
     }
 
     @Override
-    public T get(int index) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return null;
+    public T get(int index) throws IndexOutOfBoundsException {
+        checkOutOfBounds(index);
+        T return_value = (T) getNode(index).getValue();
+        return return_value;
     }
 
     @Override
-    public T set(int index, T element) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return null;
+    public T set(int index, T element) throws IndexOutOfBoundsException {
+        checkOutOfBounds(index);
+        Node node = getNode(index);
+        T old_value = (T) node.getValue();
+        node.setValue(element);
+        return old_value;
     }
 
     @Override
-    public void add(int index, T element) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
+    public void add(int index, T element) throws IndexOutOfBoundsException {
+        if(index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+        Node new_node = new Node(element);
+        if(index == 0){
+            new_node.setNext(head_and_tail.getNext());
+            head_and_tail.setNext(new_node);
+        }
+        else{
+            new_node.attachAfter(getNode(index - 1));
+        }
+        size++;
     }
 
     @Override
-    public T remove(int index) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return null;
+    public T remove(int index) throws IndexOutOfBoundsException {
+        checkOutOfBounds(index);
+        T return_value = (T) getNode(index).getValue();
+        if(index == 0){
+            head_and_tail.setNext(head_and_tail.getNext().getNext());
+        }
+        else{
+            Node previous_node = getNode(index - 1);
+            previous_node.setNext(previous_node.getNext().getNext());
+        }
+        size--;
+        return return_value;
     }
 
     @Override
     public int indexOf(Object o) {
-        /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        return 0;
+        int index = 0;
+        Node n = head_and_tail.getNext();
+        while (n != head_and_tail && !o.equals(n.getValue())){
+            n = n.getNext();
+            index++;
+        }
+        return n != head_and_tail ? index : -1;
+    }
+
+    private Node getNode(int index) throws IndexOutOfBoundsException{
+        checkOutOfBounds(index);
+        Node node = head_and_tail.getNext();
+        for(int i = index; i > 0; --i){
+            node = node.getNext();
+        }
+        return node;
+    }
+
+    private void checkOutOfBounds(int index) throws IndexOutOfBoundsException{
+        if(index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
     /**
      * Iterator for CustomLinkedList
      */
     private class CustomLinkedListIterator<E> implements Iterator<E> {
+        Node previous_node;
+        Node current_node;
+
+        public CustomLinkedListIterator(){
+            current_node = head_and_tail;
+            previous_node = head_and_tail;
+        }
 
         @Override
         public boolean hasNext() {
-             /* (TODO Lab No. 1) Please introduce a sensible implementation */
-            return false;
+            return current_node.getNext() != head_and_tail;
         }
 
         @Override
         public E next() {
-             /* (TODO Lab No. 1) Please introduce a sensible implementation */
-            return null;
+            previous_node = current_node;
+            current_node = current_node.getNext();
+            E return_value = (E) current_node.getValue();
+            return return_value;
         }
 
         @Override
         public void remove() {
-             /* (TODO Lab No. 1) Please introduce a sensible implementation */
+            CustomLinkedList.this.remove(current_node.getValue());
         }
     }
 }

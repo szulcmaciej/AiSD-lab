@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +18,11 @@ public class CustomArrayListTest {
     @Before
     public void setup() {
         list = new CustomArrayList();
+        //list = new ArrayList<>();
     }
 
     @Test
-    @Ignore /* remove this line and write other tests. */
+    //@Ignore /* remove this line and write other tests. */
     public void shouldAddOneElement() {
         // Pre
         list.clear();
