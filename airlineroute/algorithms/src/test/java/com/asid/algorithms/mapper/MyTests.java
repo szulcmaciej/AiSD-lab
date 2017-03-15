@@ -18,7 +18,15 @@ public class MyTests {
 
     static void test(){
         DataLoader loader = new DataLoaderImpl();
-        loader.loadAllData("airports.dat", "airlines.dat", "routes.dat");
+        //loader.loadAllData("airports.dat", "airlines.dat", "routes.dat");
+        loader.loadAirports("airports.dat");
+        System.out.println("loaded airports");
+
+        loader.loadAirline("airlines.dat");
+        System.out.println("loaded airlines");
+
+        //loader.loadRoute("routes.dat");
+        //System.out.println("loaded routes");
 
         InmemmoryDataBase dataBase = InmemmoryDataBase.getInstance();
         List<Airline> airlines = dataBase.getAirlines();
@@ -36,14 +44,14 @@ public class MyTests {
             System.out.println(airport);
         }
 
-        for(int i = 0; i < 100; i++){
+        /*for(int i = 0; i < 100; i++){
             System.out.println();
         }
 
         List<Route> routes = dataBase.getRoutes();
         for(Route route : routes){
             System.out.println(route);
-        }
+        }*/
     }
 
     public static void main(String args[]){

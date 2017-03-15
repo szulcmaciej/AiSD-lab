@@ -17,7 +17,7 @@ public class DataLoaderImpl implements DataLoader {
     @Override
     public void loadAirports(String pathToFile){
          /* (TODO Lab No. 1) Please introduce a sensible implementation */
-        CustomArrayList<Airport> airports = new CustomArrayList<>();
+        inmemmoryDataBase.setAirports(new CustomArrayList<>());
         Scanner scanner = null;
 
         URL url = Thread.currentThread().getContextClassLoader().getResource(pathToFile);
@@ -64,18 +64,16 @@ public class DataLoaderImpl implements DataLoader {
                 }
 
                 Airport newAirport = new Airport(iataCode, latitude, longtitude, name);
-                airports.add(newAirport);
+                inmemmoryDataBase.appendAirport(newAirport);
             }
         }
-
-        inmemmoryDataBase.setAirports(airports);
     }
 
     @Override
     public void loadAirline(String pathToFile) {
          /* (TODO Lab No. 1) Please introduce a sensible implementation */
 
-        CustomArrayList<Airline> airlines = new CustomArrayList<>();
+        inmemmoryDataBase.setAirlines(new CustomArrayList<>());
         Scanner scanner = null;
 
         URL url = Thread.currentThread().getContextClassLoader().getResource(pathToFile);
@@ -120,11 +118,9 @@ public class DataLoaderImpl implements DataLoader {
                 }
 
                 Airline newAirline = new Airline(code, name);
-                airlines.add(newAirline);
+                inmemmoryDataBase.appendAirline(newAirline);
             }
         }
-
-        inmemmoryDataBase.setAirlines(airlines);
     }
 
     @Override
