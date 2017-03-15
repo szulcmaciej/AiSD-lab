@@ -1,5 +1,6 @@
 package com.asid.foundation.datatype;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,30 +17,36 @@ public class CustomQueue<T> extends AbstractCustomQueueAdapter<T> {
     @Override
     public int size() {
           /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return 0;
+        return storage.size();
     }
 
     @Override
     public boolean isEmpty() {
           /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return false;
+        return storage.isEmpty();
     }
 
     @Override
     public boolean add(T t) {
           /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return false;
+        return storage.add(t);
     }
 
     @Override
     public T poll() {
           /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return null;
+        T returnValue = null;
+        Iterator<T> iterator = storage.iterator();
+        if(!isEmpty()){
+            returnValue = iterator.next();
+            iterator.remove();
+        }
+        return returnValue;
     }
 
     @Override
     public T peek() {
           /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return null;
+        return storage.iterator().next();
     }
 }

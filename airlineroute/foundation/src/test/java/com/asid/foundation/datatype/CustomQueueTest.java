@@ -20,7 +20,7 @@ public class CustomQueueTest {
     }
 
     @Test
-    @Ignore /* remove this line and write other tests. */
+    //@Ignore /* remove this line and write other tests. */
     public void shouldAddToQueueSomeNumbers() {
         // Act
         queue.add(1);
@@ -35,4 +35,30 @@ public class CustomQueueTest {
         Assert.assertEquals(3, (int) queue.poll());
         Assert.assertEquals(true, queue.isEmpty());
     }
+
+    @Test
+    public void shouldCheckIfQueueIsEmpty(){
+        //Act
+
+        //Assert
+        Assert.assertEquals(true, queue.isEmpty());
+    }
+    @Test
+    public void shouldReturnSizeZeroIfQueueIsEmpty(){
+        //Act
+
+        //Assert
+        Assert.assertEquals(0, queue.size());
+    }
+
+    @Test
+    public void shouldIncreaseQueueSize(){
+        //Act
+        for(int i = 0; i<100000; i++){
+            queue.add(5);
+        }
+        //Assert
+        Assert.assertEquals(100000, queue.size());
+    }
+
 }
