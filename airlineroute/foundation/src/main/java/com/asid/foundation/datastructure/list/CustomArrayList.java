@@ -64,7 +64,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
 
     @Override
     public void clear() {
-        array = new Object[initial_capacity];
+        array =  new Object[initial_capacity];
         size = 0;
     }
 
