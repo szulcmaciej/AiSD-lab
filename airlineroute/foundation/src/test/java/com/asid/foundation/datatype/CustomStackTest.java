@@ -21,7 +21,7 @@ public class CustomStackTest {
     }
 
     @Test
-    @Ignore /* remove this line and write other tests. */
+    //@Ignore /* remove this line and write other tests. */
     public void shouldAddToStackSomeNumbers() {
         // Act
         stack.push(1);

@@ -16,23 +16,24 @@ public class CustomStack<T> extends AbstractCustomStackAdapter<T> {
     @Override
     public void push(T t) {
         /* (TODO Lab No. 2) Please introduce a sensible implementation */
+        storage.add(t);
     }
 
     @Override
     public T pop() {
         /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return null;
+        return storage.remove(storage.size() - 1);
     }
 
     @Override
     public int size() {
         /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return 0;
+        return storage.size();
     }
 
     @Override
     public boolean isEmpty() {
         /* (TODO Lab No. 2) Please introduce a sensible implementation */
-        return false;
+        return storage.size() == 0;
     }
 }
