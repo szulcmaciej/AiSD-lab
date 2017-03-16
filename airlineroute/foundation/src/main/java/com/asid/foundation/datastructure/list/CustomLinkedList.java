@@ -68,7 +68,7 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
         checkOutOfBounds(index);
-        return (T) getNode(index).getValue();
+        return getNode(index).getValue();
     }
 
     @Override

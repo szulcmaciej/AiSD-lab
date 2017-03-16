@@ -151,4 +151,37 @@ public class FilterIteratorTest {
         assertEquals(4,(int) list.get(3));
         assertEquals(5,(int) list.get(4));
     }
+    @Test
+    public void shouldNotRemoveTheRightElement(){
+        //Pre
+        List<Integer> list = createEmptyList();
+        Predicate<Integer> predicate = createEvenPredicate();
+        FilterIterator<Integer> filterIterator = new FilterIterator<>(list, predicate);
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(4);
+        list.add(3);
+        list.add(2);
+        list.add(1);
+
+        //Act
+        filterIterator.next();
+        filterIterator.next();
+        filterIterator.next();
+        filterIterator.remove();
+
+        //Assert
+        assertEquals(1,(int) list.get(0));
+        assertEquals(2,(int) list.get(1));
+        assertEquals(3,(int) list.get(2));
+        assertEquals(4,(int) list.get(3));
+        assertEquals(5,(int) list.get(4));
+        assertEquals(3,(int) list.get(5));
+        assertEquals(2,(int) list.get(6));
+        assertEquals(1,(int) list.get(7));
+    }
 }

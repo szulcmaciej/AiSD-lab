@@ -14,6 +14,7 @@ public class FilterIterator<T> implements Iterator<T> {
     private Iterator<T> iterator;
     private T current;
     private T elementToRemove;
+    private T lastInternalIteratorGivenElement;
 
     public FilterIterator(List<T> list, Predicate<T> predicate) {
          /* (TODO Lab No. 2) Please introduce a sensible implementation */
@@ -22,6 +23,7 @@ public class FilterIterator<T> implements Iterator<T> {
         iterator = list.iterator();
         current = null;
         elementToRemove = null;
+        lastInternalIteratorGivenElement = null;
     }
 
     @Override
@@ -45,13 +47,19 @@ public class FilterIterator<T> implements Iterator<T> {
     public void remove() {
         /* (TODO Lab No. 2) Please introduce a sensible implementation */
         if(elementToRemove != null){
-            list.remove(elementToRemove);
+            if(elementToRemove == lastInternalIteratorGivenElement){
+                iterator.remove();
+            }
+            else{
+                list.remove(elementToRemove);
+            }
         }
     }
 
     private void setCurrent(){
         while(current == null && iterator.hasNext()){
             current = iterator.next();
+            lastInternalIteratorGivenElement = current;
             if(!predicate.test(current)){
                 current = null;
             }
