@@ -12,7 +12,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     static final double RESIZING_FACTOR = 1.3;
 
     private int initial_capacity;
-    private Object[] array;
+    private T[] array;
     private int size;
 
 
@@ -64,7 +64,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
 
     @Override
     public void clear() {
-        array =  new Object[initial_capacity];
+        array = (T[]) new Object[initial_capacity];
         size = 0;
     }
 
@@ -72,13 +72,13 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     public T get(int index) throws IndexOutOfBoundsException{
         /* (TODO Lab No. 1) Please introduce a sensible implementation */
         checkOutOfBounds(index);
-        return (T) array[index];
+        return array[index];
     }
 
     @Override
     public T set(int index, T element) throws IndexOutOfBoundsException{
         checkOutOfBounds(index);
-        T old_value = (T) array[index];
+        T old_value = array[index];
         array[index] = element;
         return old_value;
     }
@@ -95,7 +95,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     @Override
     public T remove(int index) throws IndexOutOfBoundsException {
         checkOutOfBounds(index);
-        T value = (T) array[index];
+        T value = array[index];
         int copy_from = index + 1;
         if(copy_from < size){
             System.arraycopy(array, copy_from, array, index, size - copy_from);
@@ -125,7 +125,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     private void adjustLength(int newLength){
-        Object[] new_array = new Object[newLength];
+        T[] new_array = (T[]) new Object[newLength];
         System.arraycopy(array, 0, new_array, 0, size);
         array = new_array;
     }
