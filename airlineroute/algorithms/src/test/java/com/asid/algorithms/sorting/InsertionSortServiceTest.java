@@ -32,6 +32,7 @@ public class InsertionSortServiceTest {
         List<Double> sortedList = InsertionSortService.sort(list, naturalComparator).getResult();
 
         //Assert
+        assertEquals(8, sortedList.size());
         assertEquals(1.1, sortedList.get(0), DELTA);
         assertEquals(2.2, sortedList.get(1), DELTA);
         assertEquals(3.8, sortedList.get(2), DELTA);

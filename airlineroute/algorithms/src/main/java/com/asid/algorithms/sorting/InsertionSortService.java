@@ -5,6 +5,7 @@ import com.asid.foundation.messages.StandardMessages;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Insertion sort algorithm
@@ -15,6 +16,8 @@ public class InsertionSortService extends AbstractSortService {
           /* (TODO Lab No. 3) Please introduce a sensible implementation */
         //throw new UnsupportedOperationException(StandardMessages.METHOD_NOT_IMPLEMENTED);
 
+        long startTime = System.currentTimeMillis();
+
         List<T> resultList = new CustomArrayList<>();
         for(int i = 0; i < list.size(); i++){
             int indexToInsertElement = 0;
@@ -24,9 +27,13 @@ public class InsertionSortService extends AbstractSortService {
             resultList.add(indexToInsertElement, list.get(i));
         }
 
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
 
         SortResultDs<T> sortResult = new SortResultDs<>();
         sortResult.setResult(resultList);
+        sortResult.setEstimatedTime(elapsedTime);
+
 
         return sortResult;
     }
@@ -38,29 +45,5 @@ public class InsertionSortService extends AbstractSortService {
             emptyList.add(t);
         }
         return emptyList;
-    }
-
-
-
-
-
-
-    public static void main(String args[]){
-        List<Double> list = new CustomArrayList<>();
-        Comparator<Double> naturalComparator = Comparator.naturalOrder();
-        for(int i = 0; i < 10; i++){
-            list.add(Math.random()*10);
-        }
-        for(Double d : list){
-            System.out.println(d);
-        }
-
-        System.out.println();
-
-        List<Double> sortedList = sort(list, naturalComparator).getResult();
-        for(Double d :sortedList)
-        {
-            System.out.println(d);
-        }
     }
 }
