@@ -17,7 +17,7 @@ public abstract class AbstractSortService {
      */
     protected static <T> boolean less(T o1, T o2, Comparator<? super T> comparator) {
         /* (TODO Lab No. 3) Please introduce a sensible implementation */
-        return false;
+        return comparator.compare(o1, o2) < 0;
     }
 
     /**
@@ -29,6 +29,23 @@ public abstract class AbstractSortService {
      */
     protected static <T> void exch(List<T> list, int o1Pos, int o2Pos) {
         /* (TODO Lab No. 3) Please introduce a sensible implementation */
+        T o1 = list.get(o1Pos);
+        T o2 = list.get(o2Pos);
+        if(o1Pos < o2Pos){
+            list.remove(o2Pos);
+            list.remove(o1Pos);
+            list.add(o1Pos, o2);
+            list.add(o2Pos, o1);
+        }
+        else if(o2Pos < o1Pos){
+            list.remove(o1Pos);
+            list.remove(o2Pos);
+            list.add(o2Pos, o1);
+            list.add(o1Pos, o2);
+        }
+        else{
+            //indeksy są równe, nic nie rób
+        }
     }
 
     /**
@@ -40,5 +57,9 @@ public abstract class AbstractSortService {
      */
     protected static <T> void exch(List<T> list, Object o1, Object o2) {
         /* (TODO Lab No. 3) Please introduce a sensible implementation */
+        int o1Pos = list.indexOf((T) o1);
+        int o2Pos = list.indexOf((T) o2);
+
+        exch(list, o1Pos, o2Pos);
     }
 }
