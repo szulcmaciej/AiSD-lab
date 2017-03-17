@@ -20,15 +20,17 @@ public class DataLoaderImpl implements DataLoader {
         inmemmoryDataBase.setAirports(new CustomArrayList<>());
         Scanner scanner = null;
 
+/*
         URL url = Thread.currentThread().getContextClassLoader().getResource(pathToFile);
         File file = null;
         if (url != null) {
             file = new File(url.getPath());
         }
+*/
 
         //jeśli path jest innej postaci (cała ścieżka do pliku)
 
-        //File file = new File(pathToFile);
+        File file = new File(pathToFile);
 
 
         if (file != null) {
@@ -76,15 +78,17 @@ public class DataLoaderImpl implements DataLoader {
         inmemmoryDataBase.setAirlines(new CustomArrayList<>());
         Scanner scanner = null;
 
+/*
         URL url = Thread.currentThread().getContextClassLoader().getResource(pathToFile);
         File file = null;
         if (url != null) {
             file = new File(url.getPath());
         }
+*/
 
         //jeśli path jest innej postaci (cała ścieżka do pliku)
 
-        //File file = new File(pathToFile);
+        File file = new File(pathToFile);
 
 
         if (file != null) {
@@ -130,15 +134,17 @@ public class DataLoaderImpl implements DataLoader {
         //CustomArrayList<Route> routes = new CustomArrayList<>();
         Scanner scanner = null;
 
+/*
         URL url = Thread.currentThread().getContextClassLoader().getResource(pathToFile);
         File file = null;
         if (url != null) {
             file = new File(url.getPath());
         }
+*/
 
         //jeśli path jest innej postaci (cała ścieżka do pliku)
 
-        //File file = new File(pathToFile);
+        File file = new File(pathToFile);
 
 
         if (file != null) {
