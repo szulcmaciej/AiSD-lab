@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
     private int size;
-    private final Node<T> head_and_tail = new Node<>(null);
+    private final Node<T> headAndTail = new Node<>(null);
 
     public CustomLinkedList(){
         clear();
@@ -44,13 +44,13 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 
     @Override
     public boolean remove(Object o) {
-        Node<T> n = head_and_tail.getNext();
-        Node<T> previous = head_and_tail;
-        while(n != head_and_tail && !o.equals(n.getValue())){
+        Node<T> n = headAndTail.getNext();
+        Node<T> previous = headAndTail;
+        while(n != headAndTail && !o.equals(n.getValue())){
             previous = n;
             n = n.getNext();
         }
-        if(n != head_and_tail){
+        if(n != headAndTail){
             previous.setNext(n.getNext());
             size--;
             return true;
@@ -61,7 +61,7 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 
     @Override
     public void clear() {
-        head_and_tail.setNext(head_and_tail);
+        headAndTail.setNext(headAndTail);
         size = 0;
     }
 
@@ -75,22 +75,22 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
     public T set(int index, T element) throws IndexOutOfBoundsException {
         checkOutOfBounds(index);
         Node<T> node = getNode(index);
-        T old_value = node.getValue();
+        T oldValue = node.getValue();
         node.setValue(element);
-        return old_value;
+        return oldValue;
     }
 
     @Override
     public void add(int index, T element) throws IndexOutOfBoundsException {
         if(index < 0 || index > size)
             throw new IndexOutOfBoundsException();
-        Node<T> new_node = new Node<>(element);
+        Node<T> newNode = new Node<>(element);
         if(index == 0){
-            new_node.setNext(head_and_tail.getNext());
-            head_and_tail.setNext(new_node);
+            newNode.setNext(headAndTail.getNext());
+            headAndTail.setNext(newNode);
         }
         else{
-            new_node.attachAfter(getNode(index - 1));
+            newNode.attachAfter(getNode(index - 1));
         }
         size++;
     }
@@ -98,32 +98,32 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
     @Override
     public T remove(int index) throws IndexOutOfBoundsException {
         checkOutOfBounds(index);
-        T return_value = getNode(index).getValue();
+        T returnValue = getNode(index).getValue();
         if(index == 0){
-            head_and_tail.setNext(head_and_tail.getNext().getNext());
+            headAndTail.setNext(headAndTail.getNext().getNext());
         }
         else{
-            Node<T> previous_node = getNode(index - 1);
-            previous_node.setNext(previous_node.getNext().getNext());
+            Node<T> previousNode = getNode(index - 1);
+            previousNode.setNext(previousNode.getNext().getNext());
         }
         size--;
-        return return_value;
+        return returnValue;
     }
 
     @Override
     public int indexOf(Object o) {
         int index = 0;
-        Node<T> n = head_and_tail.getNext();
-        while (n != head_and_tail && !o.equals(n.getValue())){
+        Node<T> n = headAndTail.getNext();
+        while (n != headAndTail && !o.equals(n.getValue())){
             n = n.getNext();
             index++;
         }
-        return n != head_and_tail ? index : -1;
+        return n != headAndTail ? index : -1;
     }
 
     private Node<T> getNode(int index) throws IndexOutOfBoundsException{
         checkOutOfBounds(index);
-        Node<T> node = head_and_tail.getNext();
+        Node<T> node = headAndTail.getNext();
         for(int i = index; i > 0; --i){
             node = node.getNext();
         }
@@ -138,29 +138,29 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
      * Iterator for CustomLinkedList
      */
     private class CustomLinkedListIterator<E> implements Iterator<E> {
-        Node<E> previous_node;
-        Node<E> current_node;
+        Node<E> previousNode;
+        Node<E> currentNode;
 
         public CustomLinkedListIterator(){
-            current_node = (Node<E>) head_and_tail;
-            previous_node = (Node<E>) head_and_tail;
+            currentNode = (Node<E>) headAndTail;
+            previousNode = (Node<E>) headAndTail;
         }
 
         @Override
         public boolean hasNext() {
-            return current_node.getNext() != head_and_tail;
+            return currentNode.getNext() != headAndTail;
         }
 
         @Override
         public E next() {
-            previous_node = current_node;
-            current_node = current_node.getNext();
-            return current_node.getValue();
+            previousNode = currentNode;
+            currentNode = currentNode.getNext();
+            return currentNode.getValue();
         }
 
         @Override
         public void remove() {
-            CustomLinkedList.this.remove(current_node.getValue());
+            CustomLinkedList.this.remove(currentNode.getValue());
         }
     }
 }

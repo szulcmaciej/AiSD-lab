@@ -11,7 +11,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     static final int DEFAULT_INITIAL_CAPACITY = 20;
     static final double RESIZING_FACTOR = 1.3;
 
-    private int initial_capacity;
+    private int initialCapacity;
     private T[] array;
     private int size;
 
@@ -21,7 +21,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     public CustomArrayList(int initialCapacity) {
-        initial_capacity = initialCapacity;
+        this.initialCapacity = initialCapacity;
         clear();
     }
 
@@ -64,7 +64,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
 
     @Override
     public void clear() {
-        array = (T[]) new Object[initial_capacity];
+        array = (T[]) new Object[initialCapacity];
         size = 0;
     }
 
@@ -78,9 +78,9 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     @Override
     public T set(int index, T element) throws IndexOutOfBoundsException{
         checkOutOfBounds(index);
-        T old_value = array[index];
+        T oldValue = array[index];
         array[index] = element;
-        return old_value;
+        return oldValue;
     }
 
     @Override
@@ -96,9 +96,9 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     public T remove(int index) throws IndexOutOfBoundsException {
         checkOutOfBounds(index);
         T value = array[index];
-        int copy_from = index + 1;
-        if(copy_from < size){
-            System.arraycopy(array, copy_from, array, index, size - copy_from);
+        int copyFrom = index + 1;
+        if(copyFrom < size){
+            System.arraycopy(array, copyFrom, array, index, size - copyFrom);
         }
         size--;
         return value;
@@ -115,19 +115,19 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
 
     private void ensureCapacity(int capacity){
         if(capacity > 0.9 * array.length){
-            int new_length = (int) (capacity * RESIZING_FACTOR);
-            adjustLength(new_length);
+            int newLength = (int) (capacity * RESIZING_FACTOR);
+            adjustLength(newLength);
         }
         else if(capacity < 0.6 * array.length){
-            int new_length = (int) (capacity * RESIZING_FACTOR);
-            adjustLength(new_length);
+            int newLength = (int) (capacity * RESIZING_FACTOR);
+            adjustLength(newLength);
         }
     }
 
     private void adjustLength(int newLength){
-        T[] new_array = (T[]) new Object[newLength];
-        System.arraycopy(array, 0, new_array, 0, size);
-        array = new_array;
+        T[] newArray = (T[]) new Object[newLength];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
     }
 
     private void checkOutOfBounds(int index) throws IndexOutOfBoundsException{
@@ -138,16 +138,16 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
      * Iterator for CustomArrayList
      */
     private class CustomArrayListIterator<E> implements Iterator<E> {
-        int current_index;
+        int currentIndex;
 
         public CustomArrayListIterator() {
-            current_index = -1;
+            currentIndex = -1;
         }
 
         @Override
         public boolean hasNext() {
              /* (TODO Lab No. 1) Please introduce a sensible implementation */
-            if(current_index < size - 1)
+            if(currentIndex < size - 1)
                 return  true;
             else
                 return false;
@@ -156,20 +156,20 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
         @Override
         public E next() {
              /* (TODO Lab No. 1) Please introduce a sensible implementation */
-            E return_value = null;
+            E returnValue = null;
             if(hasNext())
             {
-                current_index++;
-                return_value = (E) array[current_index];
+                currentIndex++;
+                returnValue = (E) array[currentIndex];
             }
-            return return_value;
+            return returnValue;
         }
 
         @Override
         public void remove() {
              /* (TODO Lab No. 1) Please introduce a sensible implementation */
-            CustomArrayList.this.remove(current_index);
-            current_index--;
+            CustomArrayList.this.remove(currentIndex);
+            currentIndex--;
         }
     }
 }
