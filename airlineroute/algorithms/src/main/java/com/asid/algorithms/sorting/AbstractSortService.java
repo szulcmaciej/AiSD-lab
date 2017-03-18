@@ -4,7 +4,7 @@ package com.asid.algorithms.sorting;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractSortService {
+public abstract class AbstractSortService{
 
     /**
      * Method compares two objects using a comparator

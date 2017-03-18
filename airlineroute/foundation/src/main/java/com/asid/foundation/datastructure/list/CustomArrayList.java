@@ -113,6 +113,18 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
         return i < size ? i : -1;
     }
 
+    @Override
+    public Object[] toArray() {
+        Object[] returnArray = new Object[size];
+/*
+        for(int i = 0; i < size; i++){
+            returnArray[i] = array[i];
+        }
+*/
+        System.arraycopy(array, 0, returnArray, 0, size);
+        return returnArray;
+    }
+
     private void ensureCapacity(int capacity){
         if(capacity > 0.9 * array.length){
             int newLength = (int) (capacity * RESIZING_FACTOR);

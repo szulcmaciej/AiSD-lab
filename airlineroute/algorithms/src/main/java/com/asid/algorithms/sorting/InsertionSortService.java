@@ -67,12 +67,10 @@ public class InsertionSortService extends AbstractSortService {
 
 
 
-/*
     private static <T> List<T> copyList(List<T> source, List<T> emptyList){
         for(T t : source){
             emptyList.add(t);
         }
         return emptyList;
     }
-*/
 }
