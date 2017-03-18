@@ -14,7 +14,33 @@ public class InsertionSortService extends AbstractSortService {
 
     public static <T> SortResultDs<T> sort(List<T> list, Comparator<? super T> comparator) {
           /* (TODO Lab No. 3) Please introduce a sensible implementation */
-        //throw new UnsupportedOperationException(StandardMessages.METHOD_NOT_IMPLEMENTED);
+
+        long startTime = System.currentTimeMillis();
+
+        for(int i = 0; i < list.size(); i++){
+            int indexToInsertElement = 0;
+            while(indexToInsertElement < i && less(list.get(indexToInsertElement), list.get(i), comparator)){
+                indexToInsertElement++;
+            }
+            T elementToInsert = list.get(i);
+            list.remove(i);
+            list.add(indexToInsertElement, elementToInsert);
+        }
+
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+
+        SortResultDs<T> sortResult = new SortResultDs<>();
+        sortResult.setResult(list);
+        sortResult.setEstimatedTime(elapsedTime);
+
+        return sortResult;
+    }
+/*
+    public static <T> SortResultDs<T> sort(List<T> list, Comparator<? super T> comparator) {
+          */
+/* (TODO Lab No. 3) Please introduce a sensible implementation *//*
+
 
         long startTime = System.currentTimeMillis();
 
@@ -37,13 +63,16 @@ public class InsertionSortService extends AbstractSortService {
 
         return sortResult;
     }
+*/
 
 
 
+/*
     private static <T> List<T> copyList(List<T> source, List<T> emptyList){
         for(T t : source){
             emptyList.add(t);
         }
         return emptyList;
     }
+*/
 }

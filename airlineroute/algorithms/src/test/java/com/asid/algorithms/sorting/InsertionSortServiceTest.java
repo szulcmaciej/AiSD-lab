@@ -42,4 +42,31 @@ public class InsertionSortServiceTest {
         assertEquals(7.7, sortedList.get(6), DELTA);
         assertEquals(7.7, sortedList.get(7), DELTA);
     }
+
+/*
+    public static void main(String args[]){
+        //Pre
+        List<Double> list = new CustomArrayList<>();
+        Comparator<Double> naturalComparator = Comparator.naturalOrder();
+        list.add(6.5);
+        list.add(4.0);
+        list.add(3.8);
+        list.add(7.7);
+        list.add(1.1);
+        list.add(7.7);
+        list.add(2.2);
+        list.add(3.8);
+
+        for(Double d : list){
+            System.out.println(d);
+        }
+        System.out.println();
+        //Act
+        List<Double> sortedList = InsertionSortService.sort(list, naturalComparator).getResult();
+
+        for(Double d : list){
+            System.out.println(d);
+        }
+    }
+*/
 }
