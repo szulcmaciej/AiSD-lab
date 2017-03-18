@@ -5,6 +5,7 @@ import com.asid.algorithms.database.InmemmoryDataBase;
 import com.asid.algorithms.entity.Route;
 import com.asid.algorithms.mapper.RouteMapper;
 import com.asid.algorithms.sorting.InsertionSortService;
+import com.asid.algorithms.sorting.MergeSortService;
 import com.asid.algorithms.sorting.SelectionSortService;
 import com.asid.algorithms.sorting.SortResultDs;
 import com.asid.foundation.datastructure.list.CustomArrayList;
@@ -75,6 +76,8 @@ public class SortingAlgorithmComparison {
         SortResultDs<Route> selectionResult = SelectionSortService.sort(routeList, shortestDistanceComparator);
 
         //MergeSort
+        copyRouteList(routeListToSort, routeList);
+        SortResultDs<Route> mergeResult = MergeSortService.sort(routeList, shortestDistanceComparator);
 
         //QuickSort
 
@@ -84,7 +87,7 @@ public class SortingAlgorithmComparison {
 
         System.out.println("Insertion: " + insertionResult.getEstimatedTime());
         System.out.println("Selection: " + selectionResult.getEstimatedTime());
-        //System.out.println("Merge: " + mergeResult.getEstimatedTime());
+        System.out.println("Merge: " + mergeResult.getEstimatedTime());
         //System.out.println("Quick: " + quickResult.getEstimatedTime());
         //System.out.println("Heap: " + heapResult.getEstimatedTime());
 
