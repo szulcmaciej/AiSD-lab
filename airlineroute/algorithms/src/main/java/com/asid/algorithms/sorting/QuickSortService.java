@@ -30,6 +30,7 @@ public class QuickSortService extends AbstractSortService {
     }
 
     private static <T> void quickSort(List<T> list, Comparator<? super T> comparator, int begIndex, int endIndex){
+/*
         if(begIndex < endIndex){
             int pivot = begIndex;
             int wall = pivot;
@@ -47,7 +48,28 @@ public class QuickSortService extends AbstractSortService {
                 quickSort(list, comparator, wall + 1, endIndex);
             }
         }
+*/
+        if(begIndex < endIndex){
+            int i = begIndex;
+            int j = endIndex;
+            T pivot = list.get(begIndex);
 
+            while(i < j){
+                while (i < list.size() - 1 && comparator.compare(list.get(i), pivot) < 0){
+                    i++;
+                }
+                while (j > 0 && comparator.compare(list.get(j), pivot) > 0){
+                    j--;
+                }
+                if (i < j) {
+                    exch(list, i, j);
+                    i++;
+                    j--;
+                }
+            }
+            quickSort(list, comparator, begIndex, j);
+            quickSort(list, comparator, j+1, endIndex);
+        }
 
     }
 }
