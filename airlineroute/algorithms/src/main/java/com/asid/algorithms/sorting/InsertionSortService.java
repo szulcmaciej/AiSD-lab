@@ -17,15 +17,20 @@ public class InsertionSortService extends AbstractSortService {
 
         long startTime = System.currentTimeMillis();
 
-        for(int i = 0; i < list.size(); i++){
-            int indexToInsertElement = 0;
-            while(indexToInsertElement < i && less(list.get(indexToInsertElement), list.get(i), comparator)){
-                indexToInsertElement++;
+
+        for(int i = 1; i < list.size(); i++){
+            if(less(list.get(i), list.get(i - 1), comparator)){
+                int indexToInsertElement = 0;
+                while(indexToInsertElement < i && less(list.get(indexToInsertElement), list.get(i), comparator)){
+                    indexToInsertElement++;
+                }
+                T elementToInsert = list.get(i);
+                list.remove(i);
+                list.add(indexToInsertElement, elementToInsert);
             }
-            T elementToInsert = list.get(i);
-            list.remove(i);
-            list.add(indexToInsertElement, elementToInsert);
         }
+
+
 
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;

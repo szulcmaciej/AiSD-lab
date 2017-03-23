@@ -2,7 +2,6 @@ package com.asid.algorithms.sorting;
 
 import com.asid.foundation.datastructure.list.CustomArrayList;
 import org.junit.Test;
-import org.w3c.dom.DOMImplementation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
