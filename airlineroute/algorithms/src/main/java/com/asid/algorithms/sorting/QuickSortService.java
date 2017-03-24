@@ -52,8 +52,7 @@ public class QuickSortService extends AbstractSortService {
         if(begIndex < endIndex){
             int i = begIndex;
             int j = endIndex;
-            T pivot = list.get((begIndex + endIndex)/2);
-
+            T pivot = list.get((begIndex + endIndex)/2); //element with the middle index
             while(i < j){
                 while (i < list.size() - 1 && comparator.compare(list.get(i), pivot) < 0){
                     i++;
