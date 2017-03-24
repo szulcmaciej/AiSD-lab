@@ -52,7 +52,7 @@ public class QuickSortService extends AbstractSortService {
         if(begIndex < endIndex){
             int i = begIndex;
             int j = endIndex;
-            T pivot = list.get(begIndex);
+            T pivot = list.get((begIndex + endIndex)/2);
 
             while(i < j){
                 while (i < list.size() - 1 && comparator.compare(list.get(i), pivot) < 0){
