@@ -8,7 +8,6 @@ import com.asid.algorithms.sorting.*;
 import com.asid.foundation.datastructure.list.CustomArrayList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -81,6 +80,8 @@ public class SortingAlgorithmComparison {
         SortResultDs<Route> quickResult = QuickSortService.sort(routeList, shortestDistanceComparator);
 
         //HeapSort
+        copyRouteList(routeListToSort, routeList);
+        SortResultDs<Route> heapResult = HeapSortService.sort(routeList, shortestDistanceComparator);
 
 
 
@@ -88,7 +89,7 @@ public class SortingAlgorithmComparison {
         System.out.println("Selection: " + selectionResult.getEstimatedTime());
         System.out.println("Merge: " + mergeResult.getEstimatedTime());
         System.out.println("Quick: " + quickResult.getEstimatedTime());
-        //System.out.println("Heap: " + heapResult.getEstimatedTime());
+        System.out.println("Heap: " + heapResult.getEstimatedTime());
 
     }
 

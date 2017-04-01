@@ -20,14 +20,12 @@ public class CustomPriorityQueue<T> extends AbstractCustomPriorityQueueAdapter<T
 
     @Override
     public int size() {
-         /* (TODO Lab No. 5) Please introduce a sensible implementation */
-        return 0;
+        return list.size();
     }
 
     @Override
     public boolean isEmpty() {
-         /* (TODO Lab No. 5) Please introduce a sensible implementation */
-        return false;
+        return list.isEmpty();
     }
 
     /**
@@ -38,8 +36,15 @@ public class CustomPriorityQueue<T> extends AbstractCustomPriorityQueueAdapter<T
      */
     @Override
     public boolean add(T t) {
-         /* (TODO Lab No. 5) Please introduce a sensible implementation */
-        return false;
+        if(isEmpty()){
+            list.add(t);
+        }
+        else {
+            int index = list.size();
+            list.add(index, t);
+            siftUp(index);
+        }
+        return true;
     }
 
     /**
@@ -47,7 +52,7 @@ public class CustomPriorityQueue<T> extends AbstractCustomPriorityQueueAdapter<T
      */
     @Override
     public void clear() {
- /* (TODO Lab No. 5) Please introduce a sensible implementation */
+        list.clear();
     }
 
     /**
@@ -57,8 +62,14 @@ public class CustomPriorityQueue<T> extends AbstractCustomPriorityQueueAdapter<T
      */
     @Override
     public T poll() {
-         /* (TODO Lab No. 5) Please introduce a sensible implementation */
-        return null;
+        T objectToReturn = null;
+        if(!isEmpty()){
+            objectToReturn = list.get(0);
+            list.set(0, list.get(size() - 1));
+            list.remove(size() - 1);
+            siftDown(0);
+        }
+        return objectToReturn;
     }
 
     /**
@@ -68,7 +79,55 @@ public class CustomPriorityQueue<T> extends AbstractCustomPriorityQueueAdapter<T
      */
     @Override
     public T peek() {
-         /* (TODO Lab No. 5) Please introduce a sensible implementation */
-        return null;
+        T objectToReturn = null;
+        if(!isEmpty()){
+            objectToReturn = list.get(0);
+        }
+        return objectToReturn;
+    }
+
+    private void siftUp(int index){
+        //może rekursywnie?
+        int currentIndex = index;
+        int parentIndex = (currentIndex - 1) / 2;
+        while (currentIndex > 0 && comparator.compare(list.get(currentIndex), list.get(parentIndex)) < 0){
+            swap(currentIndex, parentIndex);
+            currentIndex = parentIndex;
+            parentIndex = (parentIndex - 1) / 2;
+        }
+    }
+
+    private void siftDown(int index){
+        int biggerChildIndex = biggerChildIndex(index);
+        if(biggerChildIndex > 0 && comparator.compare(list.get(index), list.get(biggerChildIndex)) > 0){
+            swap(index, biggerChildIndex);
+            siftDown(biggerChildIndex);
+        }
+    }
+
+    private void swap(int i1, int i2){
+        T temp = list.get(i1);
+        list.set(i1, list.get(i2));
+        list.set(i2, temp);
+    }
+
+    private boolean hasAtLeastOneChild(int index){
+        return index * 2 + 1 < list.size();
+    }
+    private int biggerChildIndex(int index){
+        if(hasAtLeastOneChild(index)){
+            if(index * 2 + 2 < list.size()){
+                if(comparator.compare(list.get(index * 2 + 1), list.get(index * 2 + 2)) > 0){
+                    return index * 2 + 2;
+                }
+                else {
+                    return index * 2 + 1;
+                }
+            }
+            else {
+                return index * 2 + 1;
+            }
+        }
+        else return -1;
     }
 }
