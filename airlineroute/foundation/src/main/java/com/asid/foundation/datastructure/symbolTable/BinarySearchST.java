@@ -2,6 +2,7 @@ package com.asid.foundation.datastructure.symbolTable;
 
 import com.asid.foundation.datastructure.list.CustomArrayList;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,40 +25,56 @@ public class BinarySearchST <K extends Comparable, V> extends AbstractSymbolTabl
 
     @Override
     public boolean containsKey(Object key) {
-        boolean containsKey = false;
-        if(!isEmpty()){
-            containsKey = containsKey((K) key, 0, list.size() - 1);
-        }
-        return containsKey;
+        return indexOfNodeWithKey(key) >= 0;
     }
 
     @Override
     public Object get(Object key) {
         Object returnObject = null;
-        if(!isEmpty()){
-            returnObject = get((K) key, 0, list.size() - 1);
+        int index = indexOfNodeWithKey(key);
+        if(index >= 0){
+            returnObject = list.get(index).getValue();
         }
         return returnObject;
     }
 
     @Override
     public Object put(Comparable key, Object value) {
-        return null;
+        Object returnObject = null;
+        int indexOfNodeWithKey = indexOfNodeWithKey(key);
+        if(indexOfNodeWithKey >= 0){
+            returnObject = list.get(indexOfNodeWithKey).getValue();
+            list.get(indexOfNodeWithKey).setValue((V) value);
+        }
+        else{
+            Node nodeToAdd = new Node((K) key, (V) value);
+            list.add(indexOfFirstGreater(key), nodeToAdd);
+        }
+
+        return returnObject;
     }
 
     @Override
     public Object remove(Object key) {
-        return null;
+        Object returnObject = null;
+        if(containsKey(key)){
+            returnObject = list.remove(indexOfNodeWithKey(key)).getValue();
+        }
+        return returnObject;
     }
 
     @Override
     public Set keySet() {
-        return null;
+        Set<K> keySet = new HashSet<>();
+        for(Node node : list){
+            keySet.add(node.getKey());
+        }
+        return keySet;
     }
 
     @Override
     public Object put(Object key, Object value) {
-        return null;
+        return put((Comparable) key, value);
     }
 
     private class Node{
@@ -162,5 +179,36 @@ public class BinarySearchST <K extends Comparable, V> extends AbstractSymbolTabl
             returnValue = indexOfNodeWithKey((K) key, 0, list.size() - 1);
         }
         return returnValue;
+    }
+    private int indexOfFirstGreater(K key, int begIndex, int endIndex){
+        int indexToCheck = (begIndex + endIndex) / 2;
+        int indexOfFirstGreater = -1;
+        if(begIndex == endIndex){
+            if(key.compareTo(list.get(begIndex).getKey()) > 0){
+                indexOfFirstGreater = begIndex + 1;
+            }
+            else{
+                indexOfFirstGreater = begIndex;
+            }
+        }
+        else {
+            if(key.compareTo(list.get(indexToCheck).getKey()) < 0){
+                indexOfFirstGreater = indexOfFirstGreater(key, begIndex, indexToCheck);
+            }
+            else if(key.compareTo(list.get(indexToCheck).getKey()) > 0){
+                indexOfFirstGreater = indexOfFirstGreater(key, indexToCheck + 1, endIndex);
+            }
+        }
+        return indexOfFirstGreater;
+    }
+    private int indexOfFirstGreater(Object key){
+        int indexOfFirstGreater = -1;
+        if(isEmpty()){
+            indexOfFirstGreater = 0;
+        }
+        else{
+            indexOfFirstGreater = indexOfFirstGreater((K) key, 0, list.size() - 1);
+        }
+        return indexOfFirstGreater;
     }
 }
