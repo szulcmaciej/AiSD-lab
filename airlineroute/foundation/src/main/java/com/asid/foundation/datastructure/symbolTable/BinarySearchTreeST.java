@@ -94,7 +94,7 @@ public class BinarySearchTreeST <K extends Comparable, V> extends AbstractSymbol
 
     private Node treeFromList(List<Node> list, int beg, int end){
         if(beg < end) {
-            if (beg == 0) {
+            /*if (beg == 0) {
                 Node newNode = list.get((end + beg) / 2 + 1);
                 newNode.setLeftSubtree(treeFromList(list, beg, (end + beg) / 2));
                 newNode.setRightSubtree(treeFromList(list, (end + beg) / 2 + 2, end));
@@ -105,16 +105,16 @@ public class BinarySearchTreeST <K extends Comparable, V> extends AbstractSymbol
                 newNode.setLeftSubtree(treeFromList(list, beg, (end + beg) / 2 - 1));
                 newNode.setRightSubtree(treeFromList(list, (end + beg) / 2 + 1, end));
                 return newNode;
-            }
+            }*/
+
+            //to chyba może nie zadziałać
+            Node newNode = list.get((end + beg) / 2);
+            newNode.setLeftSubtree(treeFromList(list, beg, (end + beg) / 2 - 1));
+            newNode.setRightSubtree(treeFromList(list, (end + beg) / 2 + 1, end));
+            return newNode;
         }
         else if(beg == end){
-            if(!containsKey(list.get(beg).getKey()))
-            {
-                return list.get(beg);
-            }
-            else {
-                return null;
-            }
+            return list.get(beg);
         }
         else return null;
     }
