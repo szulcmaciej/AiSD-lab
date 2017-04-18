@@ -2,6 +2,7 @@ package com.asid.foundation.datastructure.symbolTable;
 
 import com.asid.foundation.datastructure.list.Node;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,7 +14,11 @@ public class BinarySearchTreeST <K extends Comparable, V> extends AbstractSymbol
 
     @Override
     public int size() {
-        return root.size();
+        if (root != null) {
+            return root.size();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -23,32 +28,49 @@ public class BinarySearchTreeST <K extends Comparable, V> extends AbstractSymbol
 
     @Override
     public boolean containsKey(Object key) {
-        return false;
+        return root.containsKey((K) key);
     }
 
     @Override
     public Object get(Object key) {
-        return null;
+        Node node = root.getNode((K) key);
+        if(node != null){
+            return root.getNode((K) key).getValue();
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
     public Object put(Comparable key, Object value) {
-        return null;
+        if(root == null){
+            root = new Node((K) key, (V) value);
+            return null;
+        }
+        else {
+            return root.put((K) key, (V) value);
+        }
     }
 
     @Override
     public Object remove(Object key) {
-        return null;
+        if (!isEmpty()) {
+            return root.remove((K) key).getValue();
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
     public Set keySet() {
-        return null;
+        return root.keySet();
     }
 
     @Override
     public Object put(Object key, Object value) {
-        return null;
+        return put((Comparable) key, value);
     }
 
     private class Node{
@@ -107,7 +129,156 @@ public class BinarySearchTreeST <K extends Comparable, V> extends AbstractSymbol
                 return 1 + leftSubtree.size() + rightSubtree.size();
             }
         }
+        public boolean containsKey(K key){
+            if(key.compareTo(this.getKey()) == 0){
+                return true;
+            }
+            else if(key.compareTo(this.getKey()) < 0 && leftSubtree != null){
+                return leftSubtree.containsKey(key);
+            }
+            else if(key.compareTo(this.getKey()) > 0 && rightSubtree != null){
+                return rightSubtree.containsKey(key);
+            }
+            else {
+                return false;
+            }
+        }
+        public Node getNode(K key){
+            if(key.compareTo(this.getKey()) == 0){
+                return this;
+            }
+            else if(key.compareTo(this.getKey()) < 0 && leftSubtree != null){
+                return leftSubtree.getNode(key);
+            }
+            else if(key.compareTo(this.getKey()) > 0 && rightSubtree != null){
+                return rightSubtree.getNode(key);
+            }
+            else {
+                return null;
+            }
+        }
+        public Object put(K key, V value){
+            if(key.compareTo(this.getKey()) == 0){
+                V oldValue = getValue();
+                setValue(value);
+                return oldValue;
+            }
+            else if(key.compareTo(this.getKey()) < 0 && leftSubtree != null){
+                return leftSubtree.put(key, value);
+            }
+            else if(key.compareTo(this.getKey()) > 0 && rightSubtree != null){
+                return rightSubtree.put(key, value);
+            }
+            else if(key.compareTo(this.getKey()) < 0 && leftSubtree == null){
+                Node newNode = new Node(key, value);
+                setLeftSubtree(newNode);
+                return null;
+            }
+            else if(key.compareTo(this.getKey()) > 0 && rightSubtree == null){
+                Node newNode = new Node(key, value);
+                setRightSubtree(newNode);
+                return null;
+            }
+            else {
+                System.out.println("Something went veeery wrong here!");
+                return null;
+            }
+        }
+        public Node remove(Node nodeToRemove){
+            //nodeToRemove = root.getNode(key);
+            Node parent, temp;
+            parent = root.getFatherOfNode(nodeToRemove);
 
+            if(nodeToRemove.rightSubtree != null && nodeToRemove.leftSubtree != null){
+                temp = remove(succ(nodeToRemove));
+                temp.setLeftSubtree(nodeToRemove.leftSubtree);
+                temp.setRightSubtree(nodeToRemove.rightSubtree);
+            }
+            else {
+                temp = (nodeToRemove.rightSubtree != null ? nodeToRemove.rightSubtree : nodeToRemove.leftSubtree);
+            }
+
+            if(root == nodeToRemove){
+                root = temp;
+            }
+            else if(parent.leftSubtree == nodeToRemove){
+                parent.leftSubtree = temp;
+            }
+            else {
+                parent.rightSubtree = temp;
+            }
+
+            return nodeToRemove;
+
+        }
+        public Node remove(K key){
+            return remove(getNode(key));
+        }
+        public Node getFatherOfNode(K key){
+            if(key.compareTo(root.getKey()) == 0){
+                return null;
+            }
+            else{
+                if(key.compareTo(this.getKey()) < 0 && leftSubtree != null){
+                    if(key.compareTo(leftSubtree.getKey()) == 0){
+                        return leftSubtree;
+                    }
+                    else{
+                        return leftSubtree.getFatherOfNode(key);
+                    }
+                }
+                else if(key.compareTo(this.getKey()) > 0 && rightSubtree != null){
+                    if(key.compareTo(rightSubtree.getKey()) == 0){
+                        return rightSubtree;
+                    }
+                    else {
+                        return rightSubtree.getFatherOfNode(key);
+                    }
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+        public Node getFatherOfNode(Node node){
+            return getFatherOfNode(node.key);
+        }
+        public Node succ(Node node){
+            if(node.rightSubtree != null){
+                return node.rightSubtree.minNode();
+            }
+            else{
+                Node tmp;
+                do{
+                    tmp = node;
+                    node = getFatherOfNode(node);
+                }while (node != null && node.leftSubtree != tmp);
+
+                return node;
+            }
+        }
+        public Node minNode(){
+            if(leftSubtree == null){
+                return this;
+            }
+            else {
+                return leftSubtree.minNode();
+            }
+        }
+        public Set<K> keySet(){
+            Set<K> keySet = new HashSet<>();
+            addSubtreeToKeySet(keySet);
+            return keySet;
+        }
+        private void addSubtreeToKeySet(Set<K> keySet){
+            if(leftSubtree != null){
+                leftSubtree.addSubtreeToKeySet(keySet);
+            }
+            keySet.add(key);
+            if(rightSubtree != null){
+                rightSubtree.addSubtreeToKeySet(keySet);
+            }
+        }
 
     }
 }
