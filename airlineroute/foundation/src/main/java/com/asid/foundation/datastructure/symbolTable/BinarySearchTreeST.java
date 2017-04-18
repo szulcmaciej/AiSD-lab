@@ -1,8 +1,10 @@
 package com.asid.foundation.datastructure.symbolTable;
 
+import com.asid.foundation.datastructure.list.CustomArrayList;
 import com.asid.foundation.datastructure.list.Node;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -71,6 +73,50 @@ public class BinarySearchTreeST <K extends Comparable, V> extends AbstractSymbol
     @Override
     public Object put(Object key, Object value) {
         return put((Comparable) key, value);
+    }
+
+    public void balanceTree(){
+        List<Node> list = new CustomArrayList<>(size());
+        root.addNodesToListAscending(list);
+        for(Node node : list){
+            node.setLeftSubtree(null);
+            node.setRightSubtree(null);
+        }
+
+        Node newRoot = treeFromList(list, 0, list.size() - 1);
+        root = newRoot;
+    }
+
+    public List<DrawableItem> getDrawableItemsList(List<DrawableItem> list, int begX, int begY, int offsetX, int offsetY, int textHeight){
+        root.addDrawableItemsToList(list, begX, begY, offsetX, offsetY, textHeight);
+        return list;
+    }
+
+    private Node treeFromList(List<Node> list, int beg, int end){
+        if(beg < end) {
+            if (beg == 0) {
+                Node newNode = list.get((end + beg) / 2 + 1);
+                newNode.setLeftSubtree(treeFromList(list, beg, (end + beg) / 2));
+                newNode.setRightSubtree(treeFromList(list, (end + beg) / 2 + 2, end));
+                return newNode;
+            }
+            else {
+                Node newNode = list.get((end + beg) / 2);
+                newNode.setLeftSubtree(treeFromList(list, beg, (end + beg) / 2 - 1));
+                newNode.setRightSubtree(treeFromList(list, (end + beg) / 2 + 1, end));
+                return newNode;
+            }
+        }
+        else if(beg == end){
+            if(!containsKey(list.get(beg).getKey()))
+            {
+                return list.get(beg);
+            }
+            else {
+                return null;
+            }
+        }
+        else return null;
     }
 
     private class Node{
@@ -279,6 +325,95 @@ public class BinarySearchTreeST <K extends Comparable, V> extends AbstractSymbol
                 rightSubtree.addSubtreeToKeySet(keySet);
             }
         }
+        public void addNodesToListAscending(List<Node> list){
+            if(leftSubtree != null){
+                leftSubtree.addNodesToListAscending(list);
+            }
+            list.add(this);
+            if(rightSubtree != null){
+                rightSubtree.addNodesToListAscending(list);
+            }
+        }
+        public List<DrawableItem> addDrawableItemsToList(List<DrawableItem> list, int begX, int begY, int offsetX, int offsetY, int textHeight){
+            String textToDraw = key.toString();
+            list.add(new DrawableString(begX, begY, textToDraw));
+            if(leftSubtree != null){
+                list.add(new DrawableLine(begX, begY + textHeight / 5, begX - offsetX, begY + offsetY - textHeight));
+                leftSubtree.addDrawableItemsToList(list, begX - offsetX, begY + offsetY, offsetX / 2, offsetY, textHeight);
+            }
+            if(rightSubtree != null){
+                list.add(new DrawableLine(begX, begY + textHeight / 5, begX + offsetX, begY + offsetY - textHeight));
+                rightSubtree.addDrawableItemsToList(list, begX + offsetX, begY + offsetY, offsetX / 2, offsetY, textHeight);
+            }
 
+            return list;
+        }
+
+    }
+
+    public abstract class DrawableItem{
+        int xOrigin;
+
+        public int getxOrigin() {
+            return xOrigin;
+        }
+
+        public void setxOrigin(int xOrigin) {
+            this.xOrigin = xOrigin;
+        }
+
+        public int getyOrigin() {
+            return yOrigin;
+        }
+
+        public void setyOrigin(int yOrigin) {
+            this.yOrigin = yOrigin;
+        }
+
+        int yOrigin;
+    }
+    public class DrawableString extends DrawableItem{
+        String string;
+
+        public String getString() {
+            return string;
+        }
+
+        public void setString(String string) {
+            this.string = string;
+        }
+
+        public DrawableString(int xOrigin, int yOrigin, String string) {
+            this.xOrigin = xOrigin;
+            this.yOrigin = yOrigin;
+            this.string = string;
+        }
+    }
+    public class DrawableLine extends DrawableItem{
+        int xEnd;
+        int yEnd;
+
+        public int getxEnd() {
+            return xEnd;
+        }
+
+        public void setxEnd(int xEnd) {
+            this.xEnd = xEnd;
+        }
+
+        public int getyEnd() {
+            return yEnd;
+        }
+
+        public void setyEnd(int yEnd) {
+            this.yEnd = yEnd;
+        }
+
+        public DrawableLine(int xOrigin, int yOrigin, int xEnd, int yEnd) {
+            this.xOrigin = xOrigin;
+            this.yOrigin = yOrigin;
+            this.xEnd = xEnd;
+            this.yEnd = yEnd;
+        }
     }
 }
