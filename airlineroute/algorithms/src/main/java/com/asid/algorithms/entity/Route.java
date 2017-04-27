@@ -1,11 +1,13 @@
 package com.asid.algorithms.entity;
 
+import java.util.Comparator;
+
 /**
  * Class represents a single route.
  * Do not modify this class if it is not necessary.
  * This file reflects the structure of the data in file routes.dat.
  */
-public class Route {
+public class Route implements Comparable{
     private Airline airline;
     private Airport origin;
     private Airport destination;
@@ -70,5 +72,18 @@ public class Route {
         result = 31 * result + getOrigin().hashCode();
         result = 31 * result + getDestination().hashCode();
         return result;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        int comparison = origin.getIataCode().compareTo(((Route) o).getOrigin().getIataCode());
+        if(comparison == 0){
+            comparison = destination.getIataCode().compareTo(((Route) o).getDestination().getIataCode());
+            if(comparison == 0){
+                comparison = airline.getCode().compareTo(((Route) o).getAirline().getCode());
+            }
+        }
+
+        return comparison;
     }
 }

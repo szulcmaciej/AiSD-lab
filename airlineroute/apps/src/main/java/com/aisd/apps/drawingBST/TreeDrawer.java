@@ -59,9 +59,8 @@ public class TreeDrawer extends Application {
         graphicsContext = canvas.getGraphicsContext2D();
         //setTree();
         setRandomTree();
-        tree.balanceTree();
+        //tree.balanceTree();
         drawTree(graphicsContext, tree);
-        //drawShapes(graphicsContext);
 
         root = new StackPane();
         //Pane root = new Pane();
