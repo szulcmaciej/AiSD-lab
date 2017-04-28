@@ -78,6 +78,24 @@ public class RedBlackBinarySearchTreeSTTest {
         assertNull(symbolTable.remove(0));
     }
     @Test
+    public void shouldAddAndRemoveKeyValuePair(){
+        //pre
+        RedBlackBinarySearchTreeST<Integer, String> symbolTable = new RedBlackBinarySearchTreeST<>();
+
+        //act
+        symbolTable.put(1, "jeden");
+        //symbolTable.put(2, "dwa");
+        //symbolTable.put(3, "trzy");
+
+        //assert
+        assertEquals("jeden", symbolTable.remove(1));
+        //assertEquals("dwa", symbolTable.remove(2));
+        //assertEquals("trzy", symbolTable.remove(3));
+        assertTrue(symbolTable.isEmpty());
+        assertNull(symbolTable.remove(4));
+        assertNull(symbolTable.remove(1));
+    }
+    @Test
     public void shouldReturnCorrectSize(){
         //pre
         RedBlackBinarySearchTreeST<Integer, String> symbolTable = new RedBlackBinarySearchTreeST<>();

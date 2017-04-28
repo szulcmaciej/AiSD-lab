@@ -147,6 +147,30 @@ public class RedBlackBinarySearchTreeST <K extends Comparable, V> extends Abstra
         return h;
     }
 
+    Set<K> keySet(Node h, Set<K> set){
+        if(h == null)
+            return set;
+        else {
+            set.add(h.key);
+            keySet(h.left, set);
+            keySet(h.right, set);
+        }
+        return set;
+    }
+
+    private V get(K key, Node h){
+        if(h == null)
+            return null;
+        else {
+            if(key.compareTo(h.key) == 0)
+                return h.val;
+            else if(key.compareTo(h.key) < 0)
+                return get(key, h.left);
+            else
+                return get(key, h.right);
+        }
+    }
+
     private void delete(K key) {
         if (isRed(root.left) && !isRed(root.right))
         root.color = RED;
@@ -179,17 +203,6 @@ public class RedBlackBinarySearchTreeST <K extends Comparable, V> extends Abstra
         return balance(h);
     }
 
-    Set<K> keySet(Node h, Set<K> set){
-        if(h == null)
-            return set;
-        else {
-            set.add(h.key);
-            keySet(h.left, set);
-            keySet(h.right, set);
-        }
-        return set;
-    }
-
     private Node moveRedLeft(Node h) {
         flipColors(h);
         if (isRed(h.right.left))
@@ -205,6 +218,7 @@ public class RedBlackBinarySearchTreeST <K extends Comparable, V> extends Abstra
         root = deleteMin(root);
         if (!isEmpty()) root.color = BLACK;
     }
+
     private Node deleteMin(Node h) {
         if (h.left == null)
         return null;
@@ -213,7 +227,6 @@ public class RedBlackBinarySearchTreeST <K extends Comparable, V> extends Abstra
         h.left = deleteMin(h.left);
         return balance(h);
     }
-
     private Node moveRedRight(Node h) {
         flipColors(h);
         if (!isRed(h.left.left))
@@ -226,6 +239,7 @@ public class RedBlackBinarySearchTreeST <K extends Comparable, V> extends Abstra
         root = deleteMax(root);
         if (!isEmpty()) root.color = BLACK;
     }
+
     private Node deleteMax(Node h) {
         if (isRed(h.left))
             h = rotateRight(h);
@@ -236,28 +250,20 @@ public class RedBlackBinarySearchTreeST <K extends Comparable, V> extends Abstra
         h.right = deleteMax(h.right);
         return balance(h);
     }
-
     private Node balance(Node h){
-        if (isRed(h.right)) return rotateLeft(h);
-        else return h;
+        if (isRed(h.right)) h = rotateLeft(h);
+
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
+        h.N = size(h.left) + size(h.right) + 1;
+        return h;
     }
+
     private Node min(Node h){
         if(h.left == null)
             return h;
         else
             return min(h.left);
-    }
-
-    private V get(K key, Node h){
-        if(h == null)
-            return null;
-        else {
-            if(key.compareTo(h.key) == 0)
-                return h.val;
-            else if(key.compareTo(h.key) < 0)
-                return get(key, h.left);
-            else
-                return get(key, h.right);
-        }
     }
 }
