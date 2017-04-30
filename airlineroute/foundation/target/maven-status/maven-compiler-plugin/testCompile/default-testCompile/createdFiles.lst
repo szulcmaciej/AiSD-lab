@@ -1,0 +1,11 @@
+com\asid\foundation\datastructure\symbolTable\BinarySearchTreeSTTest.class
+com\asid\foundation\datastructure\list\CustomArrayListTest.class
+com\asid\foundation\datatype\CustomPriorityQueueTest.class
+com\asid\foundation\datastructure\symbolTable\HashSearchSTTest.class
+com\asid\foundation\datatype\CustomQueueTest.class
+com\asid\foundation\datastructure\symbolTable\SequentialSearchSTTest.class
+com\asid\foundation\datastructure\list\End2EndListTest.class
+com\asid\foundation\datastructure\symbolTable\RedBlackBinarySearchTreeSTTest.class
+com\asid\foundation\datatype\CustomStackTest.class
+com\asid\foundation\datastructure\list\FilterIteratorTest.class
+com\asid\foundation\datastructure\symbolTable\BinarySearchSTTest.class
