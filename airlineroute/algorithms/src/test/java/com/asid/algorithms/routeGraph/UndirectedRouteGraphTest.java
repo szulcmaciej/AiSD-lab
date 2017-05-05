@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Lenovo on 2017-05-03.
  */
-public class RouteGraphTest {
+public class UndirectedRouteGraphTest {
 
     @Test
     public void shouldReturnEmptySetOfVerticesAndEdges(){
@@ -101,12 +101,15 @@ public class RouteGraphTest {
         graph.addEdge(a2, a3);
         graph.addEdge(a3, a4);
 
-        graph.getEdge(a2, a3).setWeight(3);
+        graph.setEdgeWeight(graph.getEdge(a2, a3), 3);
 
         //assert
         assertEquals(5, graph.getEdge(a1, a2).getWeight());
+        assertEquals(5, graph.getEdge(a2, a1).getWeight());
         assertEquals(3, graph.getEdge(a2, a3).getWeight());
+        assertEquals(3, graph.getEdge(a3, a2).getWeight());
         assertEquals(1, graph.getEdge(a3, a4).getWeight());
+        assertEquals(1, graph.getEdge(a4, a3).getWeight());
     }
     @Test
     public void shouldReturnEdgesOfAVertex(){

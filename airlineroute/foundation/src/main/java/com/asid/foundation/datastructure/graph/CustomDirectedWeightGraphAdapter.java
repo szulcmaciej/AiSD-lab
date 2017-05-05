@@ -105,18 +105,18 @@ public class CustomDirectedWeightGraphAdapter <V, E extends DefaultEdge<V>> exte
 
     @Override
     public Set<E> edgesOf(V v) {
-        //TODO czy to ma zwracać tylko outgoing czy wszystkie?
         if(v == null) throw new NullPointerException();
         if(!containsVertex(v)) throw new IllegalArgumentException();
         Set<E> edgeSet = new HashSet<>();
         edgeSet.addAll(outgoingEdgesOf(v));
+        edgeSet.addAll(incomingEdgesOf(v));
         return edgeSet;
     }
 
     @Override
     public E removeEdge(V v, V v1) {
         if(containsEdge(v, v1)){
-            Set<E> edgeList = outgoingEdgesOf(v);
+            List<E> edgeList = outgoingEdgeListOf(v);
             E edgeToRemove = null;
             for(E edge : edgeList){
                 if(edge.getTarget().equals(v1)){
@@ -136,7 +136,7 @@ public class CustomDirectedWeightGraphAdapter <V, E extends DefaultEdge<V>> exte
     @Override
     public boolean removeEdge(E e) {
         if(containsEdge(e)){
-            Set<E> edgeList = outgoingEdgesOf(e.getSource());
+            List<E> edgeList = outgoingEdgeListOf(e.getSource());
             edgeList.remove(e);
             return true;
         }
@@ -205,6 +205,9 @@ public class CustomDirectedWeightGraphAdapter <V, E extends DefaultEdge<V>> exte
 
     @Override
     public Set<E> incomingEdgesOf(V v) {
+        if(v == null) throw new NullPointerException();
+        if(!containsVertex(v)) throw new IllegalArgumentException();
+
         Set<E> incomingEdges = new HashSet<>();
         for(List<E> edgeList : edges){
             for(E e : edgeList){
@@ -224,6 +227,9 @@ public class CustomDirectedWeightGraphAdapter <V, E extends DefaultEdge<V>> exte
 
     @Override
     public Set<E> outgoingEdgesOf(V v) {
+        if(v == null) throw new NullPointerException();
+        if(!containsVertex(v)) throw new IllegalArgumentException();
+
         int index = symbolTable.get(v);
         Set<E> outgoingEdges = new HashSet<>();
         outgoingEdges.addAll(edges.get(index));
@@ -238,11 +244,19 @@ public class CustomDirectedWeightGraphAdapter <V, E extends DefaultEdge<V>> exte
                 return null;
             }
             else {
-                outgoingEdgesOf(v).add(edge);
+                outgoingEdgeListOf(v).add(edge);
                 return edge;
             }
         }
         else
             return null;
+    }
+
+    private List<E> outgoingEdgeListOf(V v){
+        if(v == null) throw new NullPointerException();
+        if(!containsVertex(v)) throw new IllegalArgumentException();
+
+        int index = symbolTable.get(v);
+        return edges.get(index);
     }
 }
