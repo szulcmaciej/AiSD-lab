@@ -88,7 +88,7 @@ public class MSTTests {
         assertEquals(5, graph.getEdge(a1, a2).getWeight(), DELTA);
     }
     @Test
-    public void PrimMSTPositionTest(){
+    public void MSTPositionTest(){
         //pre
         CustomUndirectedWeightGraphAdapter<Point2D, DefaultEdge<Point2D>> graph =
                 new CustomUndirectedWeightGraphAdapter<>(new PositionEdgeFactory(), true);
@@ -109,7 +109,9 @@ public class MSTTests {
             do {
                 i2 = random.nextInt(14);
             }while (i1 == i2);
-            graph.addEdge(points[i1], points[i2], random.nextDouble());
+            DefaultEdge<Point2D> edge = graph.addEdge(points[i1], points[i2]);
+            graph.setEdgeWeight(edge, random.nextDouble());
+
         }
 
         //act
@@ -126,6 +128,129 @@ public class MSTTests {
         System.out.println("weight: " + mst.weight());
         System.out.println("edges: " + mst.edges().size());
 */
+        System.out.println();
+        System.out.println("Kruskal");
+        System.out.println("weight: " + mstResultDsKruskal.getTotalWeight());
+        System.out.println("edges: " + mstResultDsKruskal.getEgdes().size());
+        System.out.println("Prim");
+        System.out.println("weight: " + mstResultDsKruskal.getTotalWeight());
+        System.out.println("edges: " + mstResultDsKruskal.getEgdes().size());
+
+        //assert
+        //assertEquals(5, graph.getEdge(a1, a2).getWeight(), DELTA);
+    }
+    @Test
+    public void MSTPositionTestMicro(){
+        //pre
+        CustomUndirectedWeightGraphAdapter<Point2D, DefaultEdge<Point2D>> graph =
+                new CustomUndirectedWeightGraphAdapter<>(new PositionEdgeFactory(), true);
+
+        double[] x = {1,2,3,4,5};
+        double[] y = {1,2,3,4,5};
+        Point2D[] points = new Point2D[5];
+
+        for(int i = 0; i < x.length; i++){
+            points[i] = new Point2D.Double(x[i], y[i]);
+            graph.addVertex(points[i]);
+        }
+
+        DefaultEdge<Point2D> e12 = graph.addEdge(points[0], points[1]);
+        graph.setEdgeWeight(e12, 1);
+        DefaultEdge<Point2D> e23 = graph.addEdge(points[1], points[2]);
+        graph.setEdgeWeight(e23, 2);
+        DefaultEdge<Point2D> e34 = graph.addEdge(points[2], points[3]);
+        graph.setEdgeWeight(e34, 3);
+        DefaultEdge<Point2D> e45 = graph.addEdge(points[3], points[4]);
+        graph.setEdgeWeight(e45, 3);
+        DefaultEdge<Point2D> e13 = graph.addEdge(points[0], points[2]);
+        graph.setEdgeWeight(e13, 2);
+        DefaultEdge<Point2D> e14 = graph.addEdge(points[0], points[3]);
+        graph.setEdgeWeight(e14, 3);
+        DefaultEdge<Point2D> e35 = graph.addEdge(points[2], points[4]);
+        graph.setEdgeWeight(e35, 4);
+
+        System.out.println("Edge number in graph: " + graph.edgeSet().size());
+
+        for(DefaultEdge<Point2D> e : graph.edgeSet()){
+            System.out.println(e);
+        }
+
+        //act
+
+        MinimumSpanningTreeService<Point2D, DefaultEdge<Point2D>> minimumSpanningTreeService =
+                new MinimumSpanningTreeService<>();
+
+        MSTResultDs<DefaultEdge<Point2D>> mstResultDsPrim = minimumSpanningTreeService.searchMinimumSpanningTreeUsingPrimAlg(graph);
+        MSTResultDs<DefaultEdge<Point2D>> mstResultDsKruskal = minimumSpanningTreeService.searchMinimumSpanningTreeUsingKruskalAlg(graph);
+
+        System.out.println();
+        System.out.println("Kruskal");
+        System.out.println("weight: " + mstResultDsKruskal.getTotalWeight());
+        System.out.println("edges: " + mstResultDsKruskal.getEgdes().size());
+        System.out.println("Prim");
+        System.out.println("weight: " + mstResultDsKruskal.getTotalWeight());
+        System.out.println("edges: " + mstResultDsKruskal.getEgdes().size());
+
+        //assert
+        //assertEquals(5, graph.getEdge(a1, a2).getWeight(), DELTA);
+    }
+    @Test
+    public void MSTPositionTestMini(){
+        //pre
+        CustomUndirectedWeightGraphAdapter<Point2D, DefaultEdge<Point2D>> graph =
+                new CustomUndirectedWeightGraphAdapter<>(new PositionEdgeFactory(), true);
+
+        double[] x = {1,2,3,4,5,6,7,8};
+        double[] y = {1,2,3,4,5,6,7,8};
+        Point2D[] points = new Point2D[8];
+
+        for(int i = 0; i < x.length; i++){
+            points[i] = new Point2D.Double(x[i], y[i]);
+            graph.addVertex(points[i]);
+        }
+
+        DefaultEdge<Point2D> e12 = graph.addEdge(points[0], points[1]);
+        graph.setEdgeWeight(e12, 1);
+        DefaultEdge<Point2D> e23 = graph.addEdge(points[1], points[2]);
+        graph.setEdgeWeight(e23, 2);
+        DefaultEdge<Point2D> e34 = graph.addEdge(points[2], points[3]);
+        graph.setEdgeWeight(e34, 3);
+        DefaultEdge<Point2D> e45 = graph.addEdge(points[3], points[4]);
+        graph.setEdgeWeight(e45, 3);
+        DefaultEdge<Point2D> e13 = graph.addEdge(points[0], points[2]);
+        graph.setEdgeWeight(e13, 2);
+        DefaultEdge<Point2D> e14 = graph.addEdge(points[0], points[3]);
+        graph.setEdgeWeight(e14, 3);
+        DefaultEdge<Point2D> e35 = graph.addEdge(points[2], points[4]);
+        graph.setEdgeWeight(e35, 4);
+        DefaultEdge<Point2D> e17 = graph.addEdge(points[0], points[6]);
+        graph.setEdgeWeight(e17, 1);
+        DefaultEdge<Point2D> e27 = graph.addEdge(points[1], points[6]);
+        graph.setEdgeWeight(e27, 2);
+        DefaultEdge<Point2D> e26 = graph.addEdge(points[1], points[5]);
+        graph.setEdgeWeight(e26, 1);
+        DefaultEdge<Point2D> e46 = graph.addEdge(points[3], points[5]);
+        graph.setEdgeWeight(e46, 1);
+        DefaultEdge<Point2D> e38 = graph.addEdge(points[2], points[7]);
+        graph.setEdgeWeight(e38, 1);
+        DefaultEdge<Point2D> e58 = graph.addEdge(points[4], points[7]);
+        graph.setEdgeWeight(e58, 2);
+
+
+        System.out.println("Edge number in graph: " + graph.edgeSet().size());
+
+        for(DefaultEdge<Point2D> e : graph.edgeSet()){
+            System.out.println(e);
+        }
+
+        //act
+
+        MinimumSpanningTreeService<Point2D, DefaultEdge<Point2D>> minimumSpanningTreeService =
+                new MinimumSpanningTreeService<>();
+
+        MSTResultDs<DefaultEdge<Point2D>> mstResultDsPrim = minimumSpanningTreeService.searchMinimumSpanningTreeUsingPrimAlg(graph);
+        MSTResultDs<DefaultEdge<Point2D>> mstResultDsKruskal = minimumSpanningTreeService.searchMinimumSpanningTreeUsingKruskalAlg(graph);
+
         System.out.println();
         System.out.println("Kruskal");
         System.out.println("weight: " + mstResultDsKruskal.getTotalWeight());

@@ -209,9 +209,9 @@ public class CustomUndirectedWeightGraphAdapter <V, E extends DefaultEdge<V>> ex
     public E addEdge(V v, V v1, double weight) {
         if(containsVertex(v) && containsVertex(v1)){
             E edge = edgeFactory.createEdge(v, v1);
-            edge.setWeight(weight);
+            //edge.setWeight(weight);
             E edge1 = edgeFactory.createEdge(v1, v);
-            edge1.setWeight(weight);
+            //edge1.setWeight(weight);
             if(containsEdge(edge)){
                 return null;
             }

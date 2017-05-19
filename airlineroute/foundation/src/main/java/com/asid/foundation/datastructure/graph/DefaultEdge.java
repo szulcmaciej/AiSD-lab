@@ -45,9 +45,15 @@ public class DefaultEdge<V> implements Comparable<DefaultEdge>{
         this.source = source;
         this.target = target;
     }
+    public DefaultEdge() {
+    }
 
     @Override
     public int compareTo(DefaultEdge o) {
         return ((Double) weight).compareTo(o.getWeight());
+    }
+
+    public String toString(){
+        return "(" + source + ", " + target + ", " + weight + ")";
     }
 }
