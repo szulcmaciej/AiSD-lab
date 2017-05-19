@@ -23,7 +23,7 @@ public class AirportEdgeFactory implements EdgeFactory<Airport, DefaultEdge<Airp
     public DefaultEdge<Airport> createEdge(Airport source, Airport target) {
         DefaultEdge<Airport> edge = new DefaultEdge<>(source, target);
         double distance = Math.sqrt( (source.getLatitude() - target.getLatitude())*(source.getLatitude() - target.getLatitude()) + (source.getLongitude() - target.getLongitude())*(source.getLongitude() - target.getLongitude()));
-        //edge.setWeight(distance);
+        edge.setWeight(distance);
         return edge;
     }
 }

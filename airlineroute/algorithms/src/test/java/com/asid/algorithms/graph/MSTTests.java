@@ -6,14 +6,19 @@ import com.asid.foundation.datastructure.graph.CustomUndirectedWeightGraphAdapte
 import com.asid.foundation.datastructure.graph.DefaultEdge;
 import org.junit.Test;
 
+import java.awt.geom.Point2D;
+import java.util.Random;
+
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Lenovo on 2017-05-19.
  */
 public class MSTTests {
+    double DELTA = 0.00001;
+
     @Test
-    public void PrimMSTTest(){
+    public void PrimMSTAirportTest(){
         //pre
         CustomUndirectedWeightGraphAdapter<Airport, DefaultEdge<Airport>> graph =
                 new CustomUndirectedWeightGraphAdapter<>(new AirportEdgeFactory(), true);
@@ -45,10 +50,10 @@ public class MSTTests {
         System.out.println(mst.edges().size());
 
         //assert
-        assertEquals(5, graph.getEdge(a1, a2).getWeight());
+        assertEquals(5, graph.getEdge(a1, a2).getWeight(), DELTA);
     }
     @Test
-    public void KruskalMSTTest(){
+    public void KruskalMSTAirportTest(){
         //pre
         CustomUndirectedWeightGraphAdapter<Airport, DefaultEdge<Airport>> graph =
                 new CustomUndirectedWeightGraphAdapter<>(new AirportEdgeFactory(), true);
@@ -80,6 +85,56 @@ public class MSTTests {
         System.out.println(mst.edges().size());
 
         //assert
-        assertEquals(5, graph.getEdge(a1, a2).getWeight());
+        assertEquals(5, graph.getEdge(a1, a2).getWeight(), DELTA);
+    }
+    @Test
+    public void PrimMSTPositionTest(){
+        //pre
+        CustomUndirectedWeightGraphAdapter<Point2D, DefaultEdge<Point2D>> graph =
+                new CustomUndirectedWeightGraphAdapter<>(new PositionEdgeFactory(), true);
+
+        double[] x = {2.0, 3.4, 1.2, 6.5, 3.2, 7.8, 2.3, 9.0, 0.5, 1.2, 6.5, 3.2, 7.8, 2.3};
+        double[] y = {7.5, 2.5, 3.4, 1.2, 3.2, 7.8, 2.3, 5.8, 2.7, 7.5, 2.5, 3.4, 1.2, 3.2};
+        Point2D[] points = new Point2D[14];
+
+        for(int i = 0; i < x.length; i++){
+            points[i] = new Point2D.Double(x[i], y[i]);
+            graph.addVertex(points[i]);
+        }
+
+        Random random = new Random();
+        for(int i = 0; i < 20; i++){
+            int i1 = random.nextInt(14);
+            int i2 = 0;
+            do {
+                i2 = random.nextInt(14);
+            }while (i1 == i2);
+            graph.addEdge(points[i1], points[i2], random.nextDouble());
+        }
+
+        //act
+
+        MinimumSpanningTreeService<Point2D, DefaultEdge<Point2D>> minimumSpanningTreeService =
+                new MinimumSpanningTreeService<>();
+        //KruskalMST<Point2D, DefaultEdge<Point2D>> mst = new KruskalMST<>(graph);
+        //PrimMST<Point2D, DefaultEdge<Point2D>> mst = new PrimMST<>(graph);
+
+        MSTResultDs<DefaultEdge<Point2D>> mstResultDsPrim = minimumSpanningTreeService.searchMinimumSpanningTreeUsingPrimAlg(graph);
+        MSTResultDs<DefaultEdge<Point2D>> mstResultDsKruskal = minimumSpanningTreeService.searchMinimumSpanningTreeUsingKruskalAlg(graph);
+
+/*
+        System.out.println("weight: " + mst.weight());
+        System.out.println("edges: " + mst.edges().size());
+*/
+        System.out.println();
+        System.out.println("Kruskal");
+        System.out.println("weight: " + mstResultDsKruskal.getTotalWeight());
+        System.out.println("edges: " + mstResultDsKruskal.getEgdes().size());
+        System.out.println("Prim");
+        System.out.println("weight: " + mstResultDsKruskal.getTotalWeight());
+        System.out.println("edges: " + mstResultDsKruskal.getEgdes().size());
+
+        //assert
+        //assertEquals(5, graph.getEdge(a1, a2).getWeight(), DELTA);
     }
 }

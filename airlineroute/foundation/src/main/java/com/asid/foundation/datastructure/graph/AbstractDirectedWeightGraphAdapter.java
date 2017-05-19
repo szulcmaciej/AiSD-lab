@@ -15,7 +15,7 @@ import java.util.Set;
 public abstract class AbstractDirectedWeightGraphAdapter<V,E> implements DirectedGraph<V,E>, WeightedGraph<V,E> {
     protected EdgeFactory<V,E> edgeFactory;
     protected boolean isWeight;
-    protected static final int DEFAULT_WEIGHT=1;
+    protected static final double DEFAULT_WEIGHT=1;
 
     public AbstractDirectedWeightGraphAdapter(EdgeFactory<V,E> edgeFactory, boolean isWeight) {
        this.edgeFactory=edgeFactory;
