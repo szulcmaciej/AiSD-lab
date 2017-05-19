@@ -1,7 +1,7 @@
 package com.asid.foundation.datastructure.graph;
 
 
-public class DefaultEdge<V> {
+public class DefaultEdge<V> implements Comparable<DefaultEdge>{
     private V source;
     private V target;
     private long weight;
@@ -44,5 +44,10 @@ public class DefaultEdge<V> {
     public DefaultEdge(V source, V target) {
         this.source = source;
         this.target = target;
+    }
+
+    @Override
+    public int compareTo(DefaultEdge o) {
+        return ((Long) weight).compareTo(o.getWeight());
     }
 }
