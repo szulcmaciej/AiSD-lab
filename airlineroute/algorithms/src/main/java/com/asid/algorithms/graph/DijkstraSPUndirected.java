@@ -10,14 +10,14 @@ import java.util.*;
 /**
  * Created by Lenovo on 2017-05-26.
  */
-public class DijkstraSPDirected<V, E extends DefaultEdge<V>> implements ShortestPath<V, E> {
+public class DijkstraSPUndirected<V, E extends DefaultEdge<V>> implements ShortestPath<V, E> {
 
     Map<V, Integer> map;
     private DefaultEdge[] edgeTo;
     private double distTo[];
     private CustomPriorityQueue<V> pq;
 
-    public DijkstraSPDirected(AbstractDirectedWeightGraphAdapter<V, E> graph, V s) {
+    public DijkstraSPUndirected(AbstractUndirectedWeightGraphAdapter<V, E> graph, V s) {
         map = new HashMap<>();
         Iterator<V> iterator = graph.vertexSet().iterator();
         for (int i = 0; iterator.hasNext(); i++) {
@@ -45,10 +45,10 @@ public class DijkstraSPDirected<V, E extends DefaultEdge<V>> implements Shortest
             relax(graph, pq.poll());
         }
     }
-    
-    private void relax(AbstractDirectedWeightGraphAdapter<V, E> graph, V vertex) {
+
+    private void relax(AbstractUndirectedWeightGraphAdapter<V, E> graph, V vertex) {
         int v = map.get(vertex);
-        for (E e : graph.outgoingEdgesOf(vertex)) {
+        for (E e : graph.edgesOf(vertex)) {
             int w = map.get(e.getTarget());
             if (distTo[w] > distTo[v] + e.getWeight()) {
                 distTo[w] = distTo[v] + e.getWeight();
@@ -63,7 +63,7 @@ public class DijkstraSPDirected<V, E extends DefaultEdge<V>> implements Shortest
             }
         }
     }
-    
+
     @Override
     public double distTo(V v) {
         return distTo[map.get(v)];

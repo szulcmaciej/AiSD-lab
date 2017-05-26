@@ -1,6 +1,6 @@
 package com.asid.algorithms.graph;
 
-import com.asid.foundation.datastructure.graph.AbstractUndirectedWeightGraphAdapter;
+import org.jgrapht.Graph;
 
 /**
  * Do not modify this class if it is not necessary.
@@ -8,7 +8,8 @@ import com.asid.foundation.datastructure.graph.AbstractUndirectedWeightGraphAdap
  */
 public interface AbstractShortestPathService<V,E>  {
 
-    public MSTResultDs<E> searchShortestPathUsingDijkstraAlg(AbstractUndirectedWeightGraphAdapter<V, E> graph, V from, V to);
+    public MSTResultDs<E> searchShortestPathUsingDijkstraAlg(Graph<V, E> graph, V from, V to);
 
-    public MSTResultDs<E> searchShortestPathUsingBellmanFordAlg(AbstractUndirectedWeightGraphAdapter<V, E> graph, V from, V to);
+    public MSTResultDs<E> searchShortestPathUsingBellmanFordAlg(Graph<V, E> graph, V from, V to);
+
 }

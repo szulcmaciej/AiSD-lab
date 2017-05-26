@@ -130,4 +130,14 @@ public class CustomPriorityQueue<T> extends AbstractCustomPriorityQueueAdapter<T
         }
         else return -1;
     }
+
+    @Override
+    public boolean contains(Object o) {
+        return list.contains(o);
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return list.remove(o);
+    }
 }
