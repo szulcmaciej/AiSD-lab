@@ -1,5 +1,6 @@
 com\asid\foundation\datastructure\symbolTable\BinarySearchTreeST$Node.class
 com\asid\foundation\datastructure\symbolTable\RedBlackBinarySearchTreeST.class
+com\asid\foundation\datastructure\graph\CustomDirectedWeightGraphAdapter.class
 com\asid\foundation\datatype\AbstractCustomQueueAdapter.class
 com\asid\foundation\datatype\AbstractCustomStackAdapter.class
 com\asid\foundation\datastructure\list\CustomLinkedList.class
@@ -9,14 +10,17 @@ com\asid\foundation\datastructure\symbolTable\BinarySearchTreeST$DrawableLine.cl
 com\asid\foundation\datatype\CustomStack.class
 com\asid\foundation\datastructure\symbolTable\AbstractSymbolTable.class
 com\asid\foundation\datastructure\symbolTable\SequentialSearchST.class
+com\asid\foundation\datastructure\graph\CustomUndirectedWeightGraphAdapter.class
 com\asid\foundation\datastructure\list\AbstractCustomListAdapter.class
 com\asid\foundation\messages\StandardMessages.class
 com\asid\foundation\datastructure\symbolTable\BinarySearchTreeST$DrawableItem.class
 com\asid\foundation\datastructure\symbolTable\BinarySearchTreeST.class
 com\asid\foundation\datatype\CustomPriorityQueue.class
+com\asid\foundation\datastructure\graph\AbstractUndirectedWeightGraphAdapter.class
 com\asid\foundation\datatype\CustomQueue.class
 com\asid\foundation\datastructure\symbolTable\BinarySearchTreeST$DrawableString.class
 com\asid\foundation\datastructure\list\Node.class
+com\asid\foundation\datastructure\graph\DefaultEdge.class
 com\asid\foundation\datatype\AbstractCustomPriorityQueueAdapter.class
 com\asid\foundation\datastructure\list\CustomArrayList$CustomArrayListIterator.class
 com\asid\foundation\datastructure\symbolTable\SequentialSearchST$Node.class
@@ -25,3 +29,4 @@ com\asid\foundation\datastructure\symbolTable\BinarySearchST$Node.class
 com\asid\foundation\datastructure\symbolTable\HashSearchST.class
 com\asid\foundation\datastructure\list\CustomLinkedList$CustomLinkedListIterator.class
 com\asid\foundation\datastructure\symbolTable\BinarySearchST.class
+com\asid\foundation\datastructure\graph\AbstractDirectedWeightGraphAdapter.class

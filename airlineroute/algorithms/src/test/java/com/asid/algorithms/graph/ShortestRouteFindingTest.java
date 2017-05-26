@@ -63,7 +63,7 @@ public class ShortestRouteFindingTest {
         loader.loadAirline("resources\\airlines.dat");
         System.out.println("loaded airlines");
 
-        loader.loadRoute("resources\\routes2.dat");
+        loader.loadRoute("resources\\routes3.dat");
         System.out.println("loaded routes");
     }
 
@@ -76,8 +76,7 @@ public class ShortestRouteFindingTest {
 
         for(Route r : dataBase.getRoutes()){
             double weight = haversine(r.getOrigin().getLatitude(), r.getOrigin().getLongitude(), r.getDestination().getLatitude(), r.getDestination().getLongitude());
-            DefaultEdge<Airport> edge = graph.addEdge(r.getOrigin(), r.getDestination());
-            graph.setEdgeWeight(edge, weight);
+            DefaultEdge<Airport> edge = graph.addEdge(r.getOrigin(), r.getDestination(), weight);
         }
     }
 
